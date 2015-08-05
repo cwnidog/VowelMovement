@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void (^ArrayEnumerationBlock)(id, NSUInteger, BOOL *);
+
 int main(int argc, const char *argv[])
 {
   @autoreleasepool
@@ -22,7 +24,7 @@ int main(int argc, const char *argv[])
     NSArray *vowels = @[@"a", @"e", @"i", @"o", @"u"];
     
     // declare the block variable
-    void (^devowelizer) (id, NSUInteger, BOOL *);
+    ArrayEnumerationBlock devowelizer;
     
     // compose a block and assign it to the variable
     devowelizer = ^(id string, NSUInteger i, BOOL *stop)
