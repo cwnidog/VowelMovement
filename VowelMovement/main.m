@@ -27,6 +27,15 @@ int main(int argc, const char *argv[])
     // compose a block and assign it to the variable
     devowelizer = ^(id string, NSUInteger i, BOOL *stop)
     {
+      NSRange yRange = [string rangeOfString:@"y" options:NSCaseInsensitiveSearch];
+      
+      // was a "y" found?
+      if (yRange.location != NSNotFound)
+      {
+        *stop = YES; // prevent further iterations
+        return; // end this iteration
+      }
+      
       NSMutableString *newString = [NSMutableString stringWithString:string];
       
       // iterate over the array of vowels, replacing occrences of each with an empty string
