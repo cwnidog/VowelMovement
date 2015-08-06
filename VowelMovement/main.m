@@ -23,35 +23,29 @@ int main(int argc, const char *argv[])
     // Create a list of vowels
     NSArray *vowels = @[@"a", @"e", @"i", @"o", @"u"];
     
-    // declare the block variable
-    ArrayEnumerationBlock devowelizer;
-    
-    // compose a block and assign it to the variable
-    devowelizer = ^(id string, NSUInteger i, BOOL *stop)
-    {
-      NSRange yRange = [string rangeOfString:@"y" options:NSCaseInsensitiveSearch];
-      
-      // was a "y" found?
-      if (yRange.location != NSNotFound)
-      {
-        *stop = YES; // prevent further iterations
-        return; // end this iteration
-      }
-      
-      NSMutableString *newString = [NSMutableString stringWithString:string];
-      
-      // iterate over the array of vowels, replacing occrences of each with an empty string
-      for (NSString *s in vowels)
-      {
-        NSRange fullRange = NSMakeRange(0, [newString length]);
-        [newString replaceOccurrencesOfString:s withString:@"" options:NSCaseInsensitiveSearch range:fullRange];
-      }
-      
-      [devowelizedStings addObject:newString];
-    }; // block devowelizer
-    
-    // Iterate over the array with the block
-    [originalStrings enumerateObjectsUsingBlock:devowelizer];
+    // Iterate over the array with anonymous block
+    [originalStrings enumerateObjectsUsingBlock:^(id string, NSUInteger i, BOOL *stop)
+     {
+       NSRange yRange = [string rangeOfString:@"y" options:NSCaseInsensitiveSearch];
+       
+       // was a "y" found?
+       if (yRange.location != NSNotFound)
+       {
+         *stop = YES; // prevent further iterations
+         return; // end this iteration
+       }
+       
+       NSMutableString *newString = [NSMutableString stringWithString:string];
+       
+       // iterate over the array of vowels, replacing occrences of each with an empty string
+       for (NSString *s in vowels)
+       {
+         NSRange fullRange = NSMakeRange(0, [newString length]);
+         [newString replaceOccurrencesOfString:s withString:@"" options:NSCaseInsensitiveSearch range:fullRange];
+       }
+       
+       [devowelizedStings addObject:newString];
+     }];
     NSLog(@"Devowelized strings: %@", devowelizedStings);
     
   } // @autoreleasepool
